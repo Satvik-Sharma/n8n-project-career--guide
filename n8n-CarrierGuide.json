@@ -1,0 +1,157 @@
+{
+  "name": "CarrierGuide",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1QAi9ITNTMuioDCSU09yDETg_sal4Sjmf0ZCHL3cwDeQ",
+          "mode": "list",
+          "cachedResultName": "SummerSchool-n8n-Mentor-List",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QAi9ITNTMuioDCSU09yDETg_sal4Sjmf0ZCHL3cwDeQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QAi9ITNTMuioDCSU09yDETg_sal4Sjmf0ZCHL3cwDeQ/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -992,
+        -112
+      ],
+      "id": "230054a3-bb6b-4678-8c63-4d446478dd24",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fcNGJOh53XyIIH96",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook1').item.json.body.email }}",
+        "subject": "=Carrier Path for you",
+        "message": "={{ $json.message.content }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -336,
+        -144
+      ],
+      "id": "9793156d-9fd3-4e90-976f-c020c1909824",
+      "name": "Send a message",
+      "webhookId": "8b90c2e9-c702-47cc-85ef-edcc7e07eb5c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iZMzsiNf8Sm2zzdb",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "chatgpt-4o-latest",
+          "mode": "list",
+          "cachedResultName": "CHATGPT-4O-LATEST"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=I am from organization \"Summer Shool\"\nHere is a person named {{ $('Webhook1').item.json.body.Name }} who has interest in {{ $('Webhook1').item.json.body.Interests }} and has current education qualifications as {{ $('Webhook1').item.json.body.education }}. Suggest a carrier path and roadmap for him. Also asign an approariate mentor to {{ $('Webhook1').item.json.body.Name }}.\nList of mentors = [{{ $json.toJsonString() }}\n\nOnly Generate the email body that i HTML and that I can send to {{ $('Webhook1').item.json.body.Name }} describing his carrier path and assigned approprate mentor.\n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -736,
+        -112
+      ],
+      "id": "a07b95a8-e225-4c61-b36b-7a4dbc41b75b",
+      "name": "Message a model",
+      "executeOnce": true,
+      "credentials": {
+        "openAiApi": {
+          "id": "QADdVaNEax2mH2Tl",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "5670d056-1fce-499e-96cc-d3a853c0f048",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1248,
+        -112
+      ],
+      "id": "3a351ab6-90c0-48ec-8286-cb82468432a1",
+      "name": "Webhook1",
+      "webhookId": "5670d056-1fce-499e-96cc-d3a853c0f048"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f520a3c7-94ac-4e3a-9969-532a4e892630",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "20d456a383494ab80065076915b79272bf309795b3403d848bc15e1f0a189ade"
+  },
+  "id": "s1muVUz9VyDP3xgD",
+  "tags": []
+}
