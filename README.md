@@ -1,1 +1,1 @@
-# n8n-project-career--guide
+# n8n-project-career-guide
