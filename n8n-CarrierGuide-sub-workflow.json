@@ -1,0 +1,81 @@
+{
+  "name": "FetchMentors",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1QAi9ITNTMuioDCSU09yDETg_sal4Sjmf0ZCHL3cwDeQ",
+          "mode": "list",
+          "cachedResultName": "SummerSchool-n8n-Mentor-List",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QAi9ITNTMuioDCSU09yDETg_sal4Sjmf0ZCHL3cwDeQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QAi9ITNTMuioDCSU09yDETg_sal4Sjmf0ZCHL3cwDeQ/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -752,
+        -112
+      ],
+      "id": "870d59cb-325f-47f7-9119-9ed32acc9dab",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fcNGJOh53XyIIH96",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1184,
+        -112
+      ],
+      "id": "dfb76356-3f62-4c2a-a2b4-4c8544f18076",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Get row(s) in sheet": {
+      "main": [
+        []
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "152a93c0-8215-4190-8827-4884eab11f3c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "20d456a383494ab80065076915b79272bf309795b3403d848bc15e1f0a189ade"
+  },
+  "id": "EsiKlIhzz87kqUL5",
+  "tags": []
+}
