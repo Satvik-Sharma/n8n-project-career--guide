@@ -1,39 +1,6 @@
 {
-  "name": "CarrierGuide",
+  "name": "careerGuide",
   "nodes": [
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1QAi9ITNTMuioDCSU09yDETg_sal4Sjmf0ZCHL3cwDeQ",
-          "mode": "list",
-          "cachedResultName": "SummerSchool-n8n-Mentor-List",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QAi9ITNTMuioDCSU09yDETg_sal4Sjmf0ZCHL3cwDeQ/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QAi9ITNTMuioDCSU09yDETg_sal4Sjmf0ZCHL3cwDeQ/edit#gid=0"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.6,
-      "position": [
-        -992,
-        -112
-      ],
-      "id": "230054a3-bb6b-4678-8c63-4d446478dd24",
-      "name": "Get row(s) in sheet",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "fcNGJOh53XyIIH96",
-          "name": "Google Sheets account"
-        }
-      }
-    },
     {
       "parameters": {
         "sendTo": "={{ $('Webhook1').item.json.body.email }}",
@@ -44,8 +11,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        -336,
-        -144
+        -432,
+        -112
       ],
       "id": "9793156d-9fd3-4e90-976f-c020c1909824",
       "name": "Send a message",
@@ -77,7 +44,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        -736,
+        -848,
         -112
       ],
       "id": "a07b95a8-e225-4c61-b36b-7a4dbc41b75b",
@@ -105,21 +72,37 @@
       "id": "3a351ab6-90c0-48ec-8286-cb82468432a1",
       "name": "Webhook1",
       "webhookId": "5670d056-1fce-499e-96cc-d3a853c0f048"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "EsiKlIhzz87kqUL5",
+          "mode": "list",
+          "cachedResultName": "FetchMentors"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        -1040,
+        -112
+      ],
+      "id": "cf4fdb78-4e17-455c-a7ad-7231a5fb628a",
+      "name": "Execute Workflow"
     }
   ],
   "pinData": {},
   "connections": {
-    "Get row(s) in sheet": {
-      "main": [
-        [
-          {
-            "node": "Message a model",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Message a model": {
       "main": [
         [
@@ -135,7 +118,18 @@
       "main": [
         [
           {
-            "node": "Get row(s) in sheet",
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
             "type": "main",
             "index": 0
           }
@@ -147,7 +141,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "f520a3c7-94ac-4e3a-9969-532a4e892630",
+  "versionId": "84e4508b-73eb-43ea-9828-1b67e0dbf079",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "20d456a383494ab80065076915b79272bf309795b3403d848bc15e1f0a189ade"
